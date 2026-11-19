@@ -189,7 +189,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Prediksi &amp; Analisis Dinamika Angin Muson Indonesia — v5.0 ULTIMATE PRO</title>
+    <title>Sistem Prediksi &amp; Analisis Dinamika Angin Muson Indonesia — v5.1 ULTIMATE PRO</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -435,40 +435,120 @@ body.msZoom main > section:not(#msMapSection),body.msZoom #wxSection{zoom:var(--
 @keyframes wxRing{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.35);opacity:0}}
 </style>
 
+<style id="msV51Styles">
+/* ============ 1. DASBOR TRANSPARAN (bumi 3D terlihat) ============ */
+body.theme-dark{--bg-card:rgba(8,20,34,0.55);--bg-header:rgba(8,20,34,0.60);--panel-inner:rgba(20,34,52,0.48);--modal-bg:rgba(8,20,34,0.88)}
+body.theme-light{--bg-card:rgba(255,255,255,0.80);--bg-header:rgba(255,255,255,0.85);--panel-inner:rgba(226,232,240,0.75)}
+#bgEarthWrap{opacity:.52;transition:opacity .4s}
+body.theme-light #bgEarthWrap{opacity:.22}
+main > section, #wxSection, #mainHeaderBar, #chatWindow, .glassPanel{
+  backdrop-filter:blur(11px) saturate(1.08);-webkit-backdrop-filter:blur(11px) saturate(1.08)}
+main > section{box-shadow:0 12px 34px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)}
+body.theme-dark main > section h2,body.theme-dark main > section h3,body.theme-dark #wxSection h2{text-shadow:0 1px 8px rgba(0,0,0,.65)}
+body.theme-dark .bg-slate-950\/70,body.theme-dark .bg-slate-950\/80{background-color:rgba(4,12,22,.62)!important}
+/* ============ 2. LOADING BUMI FULL SCREEN ============ */
+#monsoonBootOverlay{background:radial-gradient(circle at 50% 45%,#04101f 0%,#020714 62%,#01040c 100%)}
+#loadingEarthCanvas{position:absolute;inset:0;z-index:1}
+#loadingEarthCanvas canvas{display:block;width:100%!important;height:100%!important}
+.bootVig{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,rgba(2,7,20,0) 34%,rgba(2,7,20,.55) 68%,rgba(1,4,12,.92) 100%)}
+.bootTop{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px 14px 0;text-align:center;pointer-events:none}
+.bootBottom{position:absolute;left:0;right:0;bottom:0;z-index:5;display:flex;flex-direction:column;align-items:center;gap:9px;padding:0 16px 18px}
+.bootBottom .bootCard{width:100%;max-width:520px;background:rgba(4,14,26,.72);border:1px solid rgba(56,232,255,.28);border-radius:16px;padding:11px 14px;backdrop-filter:blur(9px)}
+.bootZoom{position:absolute;right:14px;bottom:150px;z-index:6;display:flex;flex-direction:column;gap:6px;align-items:center}
+.bootZoom button{width:34px;height:34px;border-radius:10px;border:1px solid rgba(56,232,255,.42);background:rgba(4,16,30,.82);color:#8fe4ff;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:900;cursor:pointer;backdrop-filter:blur(6px);transition:.15s}
+.bootZoom button:hover{background:rgba(14,116,144,.85);color:#fff;border-color:#38e8ff;transform:translateY(-1px)}
+.bootZoom .zlbl{font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:800;color:#7fd8ff;background:rgba(4,16,30,.82);border:1px solid rgba(56,232,255,.28);border-radius:7px;padding:2px 6px;letter-spacing:.08em}
+.bootHint{position:absolute;left:0;right:0;bottom:2px;z-index:5;text-align:center;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.22em;color:#4f6d8c;text-transform:uppercase;pointer-events:none}
+/* ============ 3. CHATBOT v5.1 — kartu jawaban detail ============ */
+@keyframes msCardIn{0%{opacity:0;transform:translateY(12px) scale(.985)}100%{opacity:1;transform:none}}
+@keyframes msSecIn{0%{opacity:0;transform:translateX(-6px)}100%{opacity:1;transform:none}}
+@keyframes msBorderFlow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes msDot{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+.msAns{position:relative;max-width:96%;border-radius:16px;padding:1.5px;background:linear-gradient(115deg,#38e8ff,#2ee6a8,#a855f7,#f59e0b,#38e8ff);background-size:200% 200%;animation:msCardIn .45s cubic-bezier(.2,.8,.2,1),msBorderFlow 7s linear infinite;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.msAnsIn{background:linear-gradient(165deg,rgba(6,18,32,.97),rgba(4,11,20,.99));border-radius:15px;padding:11px 12px;font-family:Inter,sans-serif}
+.msAnsHead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid rgba(56,232,255,.22);padding-bottom:7px;margin-bottom:8px}
+.msAnsBadge{font-family:'JetBrains Mono',monospace;font-size:8.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:99px;background:rgba(14,116,144,.45);border:1px solid rgba(56,232,255,.5);color:#9be9ff}
+.msAnsTitle{font-family:'Orbitron','Inter',sans-serif;font-size:12.5px;font-weight:900;color:#eafcff;line-height:1.35}
+.msAnsImg{width:100%;max-height:190px;object-fit:cover;border-radius:11px;border:1px solid rgba(56,232,255,.28);margin-bottom:8px;display:block;background:#061020}
+.msSec{border-radius:11px;padding:8px 10px;margin-bottom:7px;animation:msSecIn .4s ease both;border:1px solid transparent}
+.msSec b{display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:8.8px;letter-spacing:.15em;font-weight:900;text-transform:uppercase;margin-bottom:3px}
+.msSec p,.msSec li{font-size:11.8px;line-height:1.72;color:#dbeafe}
+.msSec ul{margin:2px 0 0;padding-left:15px;list-style:disc}
+.msSec li{margin-bottom:3px}
+.msSec.sum{background:rgba(8,47,73,.5);border-color:rgba(56,189,248,.35)}
+.msSec.sum b{color:#7dd3fc}
+.msSec.ris{background:rgba(6,78,59,.38);border-color:rgba(16,185,129,.35)}
+.msSec.ris b{color:#6ee7b7}
+.msSec.sar{background:rgba(69,26,3,.38);border-color:rgba(245,158,11,.35)}
+.msSec.sar b{color:#fcd34d}
+.msSec.kes{background:rgba(59,7,100,.36);border-color:rgba(168,85,247,.4)}
+.msSec.kes b{color:#d8b4fe}
+.msSec:nth-child(2){animation-delay:.05s}.msSec:nth-child(3){animation-delay:.1s}
+.msSec:nth-child(4){animation-delay:.15s}.msSec:nth-child(5){animation-delay:.2s}
+.msSrc{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.msSrc a{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:800;padding:4px 8px;border-radius:8px;text-decoration:none;border:1px solid;transition:.15s}
+.msSrc a:hover{transform:translateY(-1px);filter:brightness(1.25)}
+.msSrc a.wiki{background:rgba(30,41,59,.85);color:#cbd5e1;border-color:#64748b}
+.msSrc a.g{background:rgba(6,78,59,.6);color:#6ee7b7;border-color:#10b981}
+.msSrc a.sch{background:rgba(8,47,73,.6);color:#7dd3fc;border-color:#0ea5e9}
+.msSrc a.ai{background:rgba(59,7,100,.55);color:#d8b4fe;border-color:#a855f7}
+.msSrc a.bmkg{background:rgba(120,53,15,.6);color:#fcd34d;border-color:#f59e0b}
+.msActs{display:flex;gap:5px;margin-top:8px;flex-wrap:wrap}
+.msActs button{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:900;padding:4px 9px;border-radius:8px;border:1px solid rgba(56,232,255,.35);background:rgba(8,20,36,.9);color:#bfe9ff;cursor:pointer;transition:.15s}
+.msActs button:hover{background:rgba(14,116,144,.85);color:#fff;border-color:#38e8ff}
+.msTyping{display:inline-flex;gap:4px;align-items:center;padding:3px 0}
+.msTyping i{width:6px;height:6px;border-radius:50%;background:#38e8ff;animation:msDot 1.2s infinite}
+.msTyping i:nth-child(2){animation-delay:.15s}.msTyping i:nth-child(3){animation-delay:.3s}
+.msAppsGrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:6px;max-height:300px;overflow:auto}
+.msAppsGrid a{display:flex;gap:6px;align-items:center;padding:5px 7px;border-radius:9px;background:rgba(8,20,36,.85);border:1px solid rgba(56,232,255,.22);text-decoration:none;transition:.15s}
+.msAppsGrid a:hover{border-color:#38e8ff;background:rgba(14,40,64,.95)}
+@media(max-width:420px){.msAppsGrid{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body id="appBody" class="theme-dark bg-[var(--bg-main)] text-[var(--text-main)] p-4 md:p-6 min-h-screen flex flex-col justify-between overflow-x-hidden relative pb-32">
 
-<div id="monsoonBootOverlay" class="fixed inset-0 z-[9999] bg-slate-950 text-white flex flex-col items-center justify-between p-4 md:p-6 transition-opacity duration-700">
-  <div class="text-center mt-2 space-y-1.5">
-    <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/40 text-xs font-mono text-cyan-300">
+<div id="monsoonBootOverlay" class="fixed inset-0 z-[9999] text-white transition-opacity duration-700">
+  <div id="loadingEarthCanvas"></div>
+  <div class="bootVig"></div>
+
+  <div class="bootTop">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 border border-cyan-500/40 text-[11px] font-mono text-cyan-300 backdrop-blur">
       <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
       <span id="msBootClock">Memuat Hari &amp; Waktu Real-Time...</span>
       <span id="msBootHijri" class="text-amber-300 font-bold"></span>
     </div>
-    <h2 class="text-lg sm:text-2xl font-black tracking-wider text-cyan-400 flex items-center justify-center gap-2.5 uppercase">
+    <h2 class="text-base sm:text-xl font-black tracking-wider text-cyan-400 flex items-center justify-center gap-2.5 uppercase drop-shadow-[0_2px_12px_rgba(0,0,0,.9)]">
       <i class="fa-solid fa-wind text-cyan-400"></i> Sistem Angin Muson Indonesia
     </h2>
-    <p class="text-[10px] md:text-[11px] text-slate-400 font-mono">MONITORING &bull; PREDIKSI &bull; RADAR ANOMALI &bull; PROTOKOL BMKG</p>
+    <p class="text-[9.5px] md:text-[10.5px] text-slate-300 font-mono drop-shadow-[0_1px_8px_rgba(0,0,0,.9)]">MONITORING &bull; PREDIKSI &bull; RADAR ANOMALI &bull; PROTOKOL BMKG</p>
   </div>
-  <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 flex items-center justify-center my-auto">
-    <div id="loadingEarthCanvas" class="w-full h-full"></div>
-    <div class="absolute inset-0 rounded-full bg-cyan-500/10 blur-2xl pointer-events-none"></div>
+
+  <div class="bootZoom">
+    <button type="button" onclick="msBootZoom(1)" title="Perbesar bumi">+</button>
+    <span id="msBootZoomLbl" class="zlbl">100%</span>
+    <button type="button" onclick="msBootZoom(-1)" title="Perkecil bumi">&minus;</button>
+    <button type="button" onclick="msBootZoomReset()" title="Kembalikan zoom">&#8635;</button>
   </div>
-  <div class="w-full max-w-md text-center mb-3 space-y-2.5">
-    <div class="flex justify-between text-xs text-slate-400 font-mono mb-1">
-      <span id="msBootMsg">Menginisialisasi mesin atmosfer &amp; 3D Earth Engine...</span>
-      <span id="msBootPct" class="text-cyan-400 font-bold">10%</span>
+
+  <div class="bootBottom">
+    <div class="bootCard">
+      <div class="flex justify-between text-[11px] text-slate-300 font-mono mb-1.5">
+        <span id="msBootMsg">Menginisialisasi mesin atmosfer &amp; 3D Earth Engine...</span>
+        <span id="msBootPct" class="text-cyan-400 font-bold">10%</span>
+      </div>
+      <div class="w-full h-2.5 bg-slate-800/90 rounded-full overflow-hidden border border-slate-700">
+        <div id="msBootBar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 rounded-full transition-all duration-500" style="width:10%"></div>
+      </div>
     </div>
-    <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
-      <div id="msBootBar" class="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 rounded-full transition-all duration-500" style="width:10%"></div>
-    </div>
-    <div class="pt-1">
-      <button type="button" onclick="msBootDismiss()" class="px-5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold border border-cyan-400 transition-all">
-        <i class="fa-solid fa-rocket"></i> MASUK KE DASBOR SEKARANG
-      </button>
-    </div>
+    <button type="button" onclick="msBootDismiss()" class="px-6 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold border border-cyan-400 transition-all shadow-lg shadow-cyan-900/50">
+      <i class="fa-solid fa-rocket"></i> MASUK KE DASBOR SEKARANG
+    </button>
   </div>
+
+  <div class="bootHint">Geser untuk memutar bumi &bull; scroll atau tombol + &minus; untuk zoom</div>
 </div>
+
 <div id="bgEarthWrap"><div id="bgEarthCanvas" class="w-full h-full"></div></div>
 
 
@@ -531,7 +611,7 @@ body.msZoom main > section:not(#msMapSection),body.msZoom #wxSection{zoom:var(--
                     <h1 id="mainAppTitle" class="font-tech text-xl md:text-2xl lg:text-3xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-slate-100 to-cyan-400 theme-light:text-slate-900 theme-light:bg-none leading-tight uppercase">
                         MONITORING &amp; PREDIKSI ANGIN MUSON INDONESIA
                     </h1>
-                    <span class="inline-flex items-center gap-1.5 mt-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/50 text-[9px] font-mono font-black text-cyan-300 tracking-widest">v5.0 ULTIMATE PRO &bull; CUACA LIVE + BUMI 3D</span>
+                    <span class="inline-flex items-center gap-1.5 mt-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950 border border-cyan-500/50 text-[9px] font-mono font-black text-cyan-300 tracking-widest">v5.1 ULTIMATE PRO &bull; CUACA LIVE + BUMI 3D</span>
                     <p class="text-xs font-mono text-[var(--text-muted)] mt-1.5 uppercase tracking-wider flex items-center gap-2 font-bold theme-light:text-slate-900">
                         <span id="sync-status-dot" class="inline-block w-2.5 h-2.5 rounded-full bg-cyan-400 animate-bounce"></span> 
                         <span id="sync-status-text">Mekanisme Sinkronisasi Live Data Windy Aktif</span>
@@ -2492,6 +2572,7 @@ function processChatMessage() {
                 </div>`;
             
             if (typeof wxIsWeatherQuery === 'function' && wxIsWeatherQuery(query)) { try { wxChatReply(userText); } catch(e) { console.warn(e); } inputEl.value = ''; return; }
+            if (typeof msChatAnswer === 'function') { try { msChatAnswer(userText, query); } catch(e) { console.warn(e); } inputEl.value = ''; return; }
 
             let foundReply = "";
             let requiresExternalFetch = false;
@@ -2993,11 +3074,17 @@ EARTH_TEX_SOURCES = {
 
             const earthSpeed = opts.earthSpeed || 0.0009;
             const cloudSpeed = opts.cloudSpeed || 0.0016;
+            const baseCamZ = camera.position.z;
+            let zoomK = 1;
             const api = {
                 raf: 0, running: false, renderer: renderer,
+                setZoom: function (k) { zoomK = Math.max(0.45, Math.min(3.2, k)); camera.position.z = baseCamZ / zoomK; camera.updateProjectionMatrix(); },
+                getZoom: function () { return zoomK; },
                 loop: function () {
                     api.running = true;
                     earthMesh.rotation.y += earthSpeed;
+                    if (api.dragDY) { earthGroup.rotation.y += api.dragDY; api.dragDY = 0; }
+                    if (api.dragDX) { earthGroup.rotation.x = Math.max(-0.85, Math.min(0.85, earthGroup.rotation.x + api.dragDX)); api.dragDX = 0; }
                     cloudMesh.rotation.y += cloudSpeed + earthSpeed * 0.4;
                     starMesh.rotation.y += 0.00006;
                     renderer.render(scene, camera);
@@ -3009,13 +3096,28 @@ EARTH_TEX_SOURCES = {
                     camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h);
                 }
             };
+            if (opts.controls) {
+                const el = renderer.domElement;
+                el.style.cursor = 'grab'; el.style.touchAction = 'none';
+                let dragging = false, lx = 0, ly = 0;
+                el.addEventListener('pointerdown', function (e) { dragging = true; lx = e.clientX; ly = e.clientY; el.style.cursor = 'grabbing'; try { el.setPointerCapture(e.pointerId); } catch (x) {} });
+                el.addEventListener('pointermove', function (e) {
+                    if (!dragging) return;
+                    api.dragDY = (api.dragDY || 0) + (e.clientX - lx) * 0.006;
+                    api.dragDX = (api.dragDX || 0) + (e.clientY - ly) * 0.004;
+                    lx = e.clientX; ly = e.clientY;
+                });
+                const endDrag = function () { dragging = false; el.style.cursor = 'grab'; };
+                el.addEventListener('pointerup', endDrag); el.addEventListener('pointercancel', endDrag); el.addEventListener('pointerleave', endDrag);
+                el.addEventListener('wheel', function (e) { e.preventDefault(); api.setZoom(api.getZoom() * (e.deltaY > 0 ? 0.92 : 1.08)); var l = document.getElementById('msBootZoomLbl'); if (l) l.textContent = Math.round(api.getZoom() * 100) + '%'; }, { passive: false });
+            }
             return api;
         }
 
         function initLoadingRealisticEarth() {
             try {
                 const c = document.getElementById('loadingEarthCanvas');
-                bootEarthObj = createRealisticEarth(c, { camZ: 70, camY: 2, radius: 20, earthSpeed: 0.0011 });
+                bootEarthObj = createRealisticEarth(c, { camZ: 44, camY: 2, radius: 20, earthSpeed: 0.0011, controls: true });
                 if (bootEarthObj) bootEarthObj.loop();
             } catch (e) { console.warn('Loading Earth 3D nonaktif:', e); }
         }
@@ -3660,7 +3762,7 @@ async function wxChatReply(text){
     '<a href="https://www.windy.com/-2.5/118?wind" target="_blank" class="px-2 py-1 bg-slate-800 text-slate-300 text-[9.5px] rounded border border-slate-600 hover:bg-slate-700">Windy</a>'+
     '<a href="https://open-meteo.com/" target="_blank" class="px-2 py-1 bg-slate-800 text-slate-300 text-[9.5px] rounded border border-slate-600 hover:bg-slate-700">Open-Meteo</a>'+
   '</div>';
-  if(mc){ mc.innerHTML += '<div class="bg-slate-900 p-3 rounded-xl border border-slate-700 max-w-[85%] font-sans font-medium text-slate-100 leading-relaxed text-[12.5px]">'+html+'</div>'; mc.scrollTop=mc.scrollHeight; }
+  if(mc){ var _rich=(typeof msWeatherCard==='function')? msWeatherCard() : ''; mc.innerHTML += (_rich || ('<div class="bg-slate-900 p-3 rounded-xl border border-slate-700 max-w-[85%] font-sans font-medium text-slate-100 leading-relaxed text-[12.5px]">'+html+'</div>')); mc.scrollTop=mc.scrollHeight; }
   try{ speakText('Cuaca live '+c.name+'. '+a.cond[0]+', suhu '+wxFmt(cur.temperature_2m)+' derajat celsius, angin dari '+wxDirName(cur.wind_direction_10m)+' '+wxFmt(cur.wind_speed_10m*3.6,0)+' kilometer per jam. Status risiko '+a.status.t+'.'); }catch(e){}
 }
 
@@ -3699,6 +3801,248 @@ if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded
 window.wxState=wxState; window.wxLoad=wxLoad; window.wxPickCity=wxPickCity; window.wxSearchCity=wxSearchCity;
 window.wxGeolocate=wxGeolocate; window.wxExportWord=wxExportWord; window.wxChatReply=wxChatReply; window.wxIsWeatherQuery=wxIsWeatherQuery;
 window.msZoom=msZoom; window.msFullscreen=msFullscreen; window.msHijri=msHijri;
+
+/* ============================================================
+   MONSOON v5.1 — CHATBOT DETAIL (RISALAH/SARAN/KESIMPULAN) + BOOT ZOOM
+   ============================================================ */
+function msSnap(){
+  var a=null,d=null,city='Indonesia';
+  try{ if(typeof wxState!=='undefined' && wxState.analysis){ a=wxState.analysis; d=wxState.data; city=wxState.city.name; } }catch(e){}
+  return {a:a,d:d,city:city};
+}
+function msN(v,dec,unit){ if(v===null||v===undefined||isNaN(v)) return '—'; return Number(v).toFixed(dec===undefined?1:dec)+(unit||''); }
+function msEsc(s){ return String(s||'').replace(/[&<>"]/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]; }); }
+function msSpeak(text){ try{ if(typeof speakText==='function') speakText(text); }catch(e){} }
+
+var MS_TOPICS = [
+  {k:'muson', words:['muson','monsoon','angin musiman','mousson'], title:'Dinamika Angin Muson Indonesia'},
+  {k:'kemarau', words:['kemarau','kekeringan','el nino','elnino','defisit air','kering'], title:'Musim Kemarau & Manajemen Kekeringan'},
+  {k:'hujan', words:['hujan','banjir','curah hujan','genangan','la nina','lanina','longsor'], title:'Musim Hujan & Risiko Hidrometeorologi'},
+  {k:'bmkg', words:['bmkg','peringatan dini','peringatan','warning','gempa','tsunami'], title:'Peringatan Dini & Rujukan Resmi BMKG'},
+  {k:'tani', words:['pertanian','tanam','agraria','padi','sawah','pangan','petani'], title:'Sektor Pertanian & Kalender Tanam'},
+  {k:'laut', words:['perikanan','nelayan','laut','gelombang','pelayaran','kapal','pesisir'], title:'Sektor Kelautan, Perikanan & Pelayaran'},
+  {k:'udara', words:['penerbangan','pesawat','bandara','aviasi','drone','penerbang'], title:'Sektor Penerbangan & Operasi Udara'},
+  {k:'energi', words:['energi','sda','sumber daya air','plta','waduk','bendungan','irigasi','pembangkit'], title:'Sumber Daya Air & Energi'},
+  {k:'mitigasi', words:['mitigasi','saran','rekomendasi','adaptasi','kesiapsiagaan','protokol'], title:'Mitigasi & Protokol Kesiapsiagaan'},
+  {k:'analisis', words:['analisis','risalah','laporan','ringkasan','kondisi','prakiraan','iklim'], title:'Risalah Teknis Kondisi Atmosfer'}
+];
+
+function msPickTopic(q){
+  var best=null, score=0;
+  MS_TOPICS.forEach(function(t){
+    var s=0; t.words.forEach(function(w){ if(q.indexOf(w)>=0) s+=w.length; });
+    if(s>score){ score=s; best=t; }
+  });
+  return best;
+}
+
+function msPack(key){
+  var s=msSnap(), a=s.a, d=s.d, city=s.city;
+  var live = a ? ('Data live '+city+': '+a.cond[0]+', suhu '+msN(d.current.temperature_2m,1,' °C')+', RH '+msN(d.current.relative_humidity_2m,0,' %')+', angin '+msN(d.current.wind_speed_10m*3.6,0,' km/j')+' dari '+a.dominant+', indeks muson MI '+(a.mi>=0?'+':'')+msN(a.mi,2,' m/s')+', hujan 24 jam '+msN(a.rain24,1,' mm')+', status '+a.status.t+' ('+a.score+'/100).') : 'Data cuaca live belum tersinkron; angka di bawah memakai basis klimatologis umum.';
+  var P={};
+  P.muson={sum:'Angin muson adalah sirkulasi skala besar yang berbalik arah dua kali setahun akibat beda tekanan antara daratan Asia–Australia, menghasilkan musim hujan (monsun barat) dan musim kemarau (monsun timur).',
+    ris:'Komponen zonal (u) rata-rata 24 jam menjadi penanda utama: u positif menandakan angin dari barat (Monsun Barat, membawa uap air dari Laut China Selatan–Samudra Hindia sehingga curah hujan meningkat), u negatif menandakan angin dari timur (Monsun Timur, kering karena massa udara Australia). Nilai |MI| < 1,2 m/s menandakan fase transisi dengan sirkulasi lokal, konveksi sore, dan arah angin yang mudah berubah. '+live,
+    saran:['Pantau indeks MI harian; tetapkan ambang internal (mis. MI > +1,2 m/s selama 7 hari berturut) sebagai pemicu kesiapan musim hujan.','Selaraskan jadwal proyek dengan fase: pekerjaan tanah pada transisi, pengamanan lereng dan drainase menjelang monsun barat.','Validasi silang dengan analisis BMKG dan indeks ENSO/DMI sebelum mengambil keputusan jangka panjang.'],
+    kes:'Fase muson menentukan pola hujan dan angin dominan sepanjang tahun; keputusan teknis yang baik adalah yang mengikuti fase ini, bukan melawannya.'};
+  P.kemarau={sum:'Musim kemarau Indonesia dipicu menguatnya Monsun Australia (angin timuran) dan sering diperparah El Nino, menyebabkan defisit air, penurunan muka air waduk, serta risiko kebakaran lahan.',
+    ris:'Pada fase ini tekanan tinggi di Australia mendorong massa udara kering menuju Indonesia; kelembapan rendah, tutupan awan berkurang, dan evapotranspirasi meningkat. Dampak teknis: penurunan debit andalan sungai, muka air tanah turun, kapasitas tampung embung menyusut, dan kadar sedimen serta kualitas air berubah. '+live,
+    saran:['Hitung neraca air bulanan (inflow–outflow) dan tetapkan alokasi prioritas: domestik, irigasi, lalu industri.','Lakukan audit kebocoran jaringan dan kalibrasi alat ukur debit sebelum puncak kemarau.','Siapkan protokol darurat kekeringan: suplai air tangki, sumur bor cadangan, dan pembatasan irigasi bergilir.'],
+    kes:'Kemarau bukan hanya soal hujan berkurang, tetapi soal kemampuan sistem menahan dan membagi air; kesiapan neraca air menentukan besarnya dampak.'};
+  P.hujan={sum:'Musim hujan membawa curah hujan tinggi, namun risiko terbesar justru datang dari hujan lebat jangka pendek dan konveksi ekstrem yang memicu banjir, genangan, dan longsor.',
+    ris:'Intensitas hujan (mm/jam) lebih menentukan dibanding total bulanan. Kombinasi CAPE tinggi (>1500 J/kg), kelembapan lapisan rendah tinggi, dan hembusan angin kuat menandakan potensi badai petir serta hujan lebat lokal. Pada lereng, akumulasi hujan 3 hari berturut >100 mm meningkatkan risiko longsor; pada dataran rendah, kapasitas drainase dan muka air pasang menentukan luas genangan. '+live,
+    saran:['Terapkan stop-work saat petir terdeteksi dalam radius 10 km dan saat hujan >20 mm/jam pada pekerjaan terbuka.','Bersihkan saluran, gorong-gorong, dan kolam retensi; siapkan pompa portabel di titik genangan berulang.','Aktifkan pemantauan lereng: retakan, rembesan, dan deformasi kecil adalah peringatan dini longsor.'],
+    kes:'Risiko hidrometeorologi dikendalikan dengan kecepatan respons dan kesiapan drainase, bukan hanya dengan prakiraan; sistem yang siap selalu lebih aman daripada sistem yang besar.'};
+  P.bmkg={sum:'BMKG adalah sumber resmi peringatan dini cuaca, iklim, gempa, dan tsunami di Indonesia; keputusan operasional sebaiknya merujuk peringatan ini.',
+    ris:'Peringatan dini BMKG disusun dari model numerik, radar cuaca, dan observasi permukaan; tingkatannya mulai dari informasi, waspada, hingga siaga/awas. Untuk gempa dan tsunami, InaTEWS menyediakan parameter magnitudo, kedalaman, dan status ancaman. Aplikasi ini melengkapi dengan analisis muson, namun status resmi tetap menjadi acuan hukum dan keselamatan. '+live,
+    saran:['Aktifkan notifikasi aplikasi BMKG (info BMKG) dan tautkan ke grup koordinasi lapangan.','Simpan kontak BPBD setempat dan jalur evakuasi terdekat pada rencana kontingensi proyek.','Latih simulasi evakuasi minimal dua kali setahun untuk tim lapangan.'],
+    kes:'Prakiraan internal membantu perencanaan, tetapi peringatan resmi BMKG adalah dasar tindakan darurat; keduanya harus berjalan bersama.'};
+  P.tani={sum:'Keberhasilan pertanian sangat bergantung pada awal musim hujan, distribusi curah hujan, dan ketersediaan irigasi; salah menentukan waktu tanam berisiko gagal panen.',
+    ris:'Awal musim hujan biasanya ditandai hujan >50 mm dalam dasarian (10 hari) berturut-turut. Pola tanam padi–padi–palawija membutuhkan air lebih banyak dibanding padi–jagung–kedelai. Pada tahun El Nino, awal musim mundur dan periode kering memanjang sehingga varietas genjah serta pengaturan giliran air menjadi kunci. '+live,
+    saran:['Gunakan Kalender Tanam Terpadu (Katam) BMKG-Kementan sebagai basis jadwal tanam.','Siapkan pompa dan sumur dangkal untuk periode kering di antara dua hujan.','Pantau hama pascahujan pertama; kelembapan tinggi meningkatkan serangan jamur dan wereng.'],
+    kes:'Waktu tanam yang tepat lebih menentukan hasil daripada jumlah input; keputusan tanam harus mengikuti sinyal awal musim hujan, bukan kalender tetap.'};
+  P.laut={sum:'Angin muson mengubah tinggi gelombang dan arus permukaan, sehingga keselamatan nelayan serta jadwal pelayaran sangat terpengaruh.',
+    ris:'Kecepatan angin permukaan berkorelasi dengan tinggi gelombang melalui fetch dan durasi; angin >15 knot (28 km/j) umumnya membentuk gelombang >1,5 m di perairan terbuka. Pada monsun barat, gelombang dari barat daya mendominasi perairan selatan Jawa hingga Nusa Tenggara, sementara pada monsun timur angin timuran menguat di Laut Jawa bagian timur dan Laut Banda. '+live,
+    saran:['Tetapkan ambang operasi: perahu kecil tidak melaut bila angin >20 knot atau gelombang >1,25 m.','Perbarui prakiraan gelombang BMKG sebelum keberangkatan dan gunakan radio/HP tahan air.','Untuk pekerjaan pesisir, jadwalkan pengecoran dan pengerukan pada jendela cuaca tenang.'],
+    kes:'Keselamatan laut ditentukan oleh keputusan sebelum berlayar; ambang angin dan gelombang yang jelas menyelamatkan lebih banyak nyawa daripada keberanian.'};
+  P.udara={sum:'Penerbangan dipengaruhi angin permukaan, arah landasan, visibility, dan awan konvektif; angin lintas (crosswind) adalah faktor pembatas utama.',
+    ris:'Setiap landasan memiliki batas crosswind komponen (umumnya 15–25 knot untuk pesawat komersial) dan batas tailwind. Angin muson mengubah arah dominan sehingga landasan yang beroperasi dapat berganti. Awan cumulonimbus, windshear, dan jarak pandang <1.500 m memicu penundaan atau pengalihan penerbangan. '+live,
+    saran:['Gunakan prakiraan angin per jam untuk menentukan landasan aktif dan jadwal operasi.','Siapkan prosedur windshear dan go-around; latih kru untuk kondisi angin musiman.','Untuk operasi drone, batasi terbang bila angin >10 m/s atau gust melebihi 1,5 kali kecepatan jelajah.'],
+    kes:'Di udara, angin adalah pembatas keras; kepatuhan pada ambang crosswind dan visibility adalah bentuk keselamatan, bukan formalitas.'};
+  P.energi={sum:'Pola muson menentukan debit andalan, produksi PLTA, dan ketersediaan air baku; perencanaan energi harus memakai skenario basah dan kering.',
+    ris:'Debit andalan Q90 dipakai untuk perencanaan pembangkit, sedangkan Q50 untuk optimasi tahunan. Pada monsun barat, inflow meningkat tajam dan risiko sedimen serta sampah di intake naik; pada monsun timur, muka air waduk turun sehingga head dan produksi berkurang. Perubahan tata guna lahan di hulu memperbesar fluktuasi limpasan. '+live,
+    saran:['Susun kurva operasi waduk dua skenario (basah/kering) dan uji dengan data 10 tahun terakhir.','Pasang pengukur debit dan tinggi muka air telemetri untuk keputusan real-time.','Jadwalkan pengerukan sedimen pada akhir musim hujan agar kapasitas tampung pulih sebelum kemarau.'],
+    kes:'Ketersediaan energi berbasis air adalah fungsi dari pengelolaan waduk sepanjang tahun; perencanaan dua skenario lebih tahan dibanding satu angka debit.'};
+  P.mitigasi={sum:'Mitigasi adalah rangkaian tindakan terukur sebelum, saat, dan sesudah kejadian hidrometeorologi untuk menurunkan risiko sampai tingkat yang dapat diterima.',
+    ris:'Kerangka kerja: identifikasi bahaya, penilaian kerentanan, penetapan ambang pemicu (trigger), lalu tindakan. Untuk hujan: ambang 20 mm/jam dan 100 mm/3 hari. Untuk angin: 40 km/j membatasi pekerjaan ketinggian, 60 km/j menghentikan crane. Untuk kekeringan: muka air waduk di bawah zona operasi normal memicu pembatasan. Setiap ambang harus disertai penanggung jawab dan jalur komunikasi. '+live,
+    saran:['Tetapkan ambang pemicu tertulis dan tempel di posko lapangan, bukan hanya di dokumen.','Bentuk tim siaga dengan tugas jelas: pemantau cuaca, penghubung BMKG/BPBD, dan pengawas lapangan.','Dokumentasikan setiap aktivasi protokol untuk evaluasi dan perbaikan berkelanjutan.'],
+    kes:'Mitigasi yang berhasil adalah mitigasi yang dijalankan sebelum tanda pertama bahaya, dengan ambang yang jelas dan orang yang bertanggung jawab.'};
+  P.analisis={sum:'Ringkasan teknis kondisi atmosfer terkini berdasarkan asimilasi data model global dan analisis fase muson.',
+    ris:live+' Analisis ini menggabungkan parameter permukaan (suhu, kelembapan, tekanan, angin), parameter konvektif (CAPE, presipitasi), serta klasifikasi fase muson untuk menurunkan skor risiko operasional komposit 0–100.',
+    saran:['Gunakan skor risiko sebagai pemicu rapat koordinasi harian pada kondisi SIAGA ke atas.','Bandingkan dengan radar cuaca Windy dan peringatan BMKG sebelum keputusan besar.','Catat keputusan harian agar dapat dievaluasi terhadap kejadian sebenarnya.'],
+    kes: a ? ('Kondisi '+city+' saat ini '+a.cond[0].toLowerCase()+', fase '+a.phaseFull+', status '+a.status.t+' ('+a.score+'/100).') : 'Data live belum tersinkron; buka panel CUACA LIVE untuk asimilasi terbaru.'};
+  return P[key] || P.analisis;
+}
+
+function msSrcChips(topic, wikiUrl){
+  var q=encodeURIComponent(topic||'angin muson indonesia');
+  var h='<div class="msSrc">';
+  if(wikiUrl) h+='<a class="wiki" href="'+wikiUrl+'" target="_blank"><i class="fa-brands fa-wikipedia-w"></i> WIKIPEDIA</a>';
+  h+='<a class="g" href="https://www.google.com/search?q='+q+'" target="_blank"><i class="fa-brands fa-google"></i> GOOGLE</a>';
+  h+='<a class="sch" href="https://scholar.google.com/scholar?q='+q+'" target="_blank"><i class="fa-solid fa-graduation-cap"></i> SCHOLAR</a>';
+  h+='<a class="bmkg" href="https://www.bmkg.go.id/cuaca/prakiraan-cuaca" target="_blank"><i class="fa-solid fa-satellite-dish"></i> BMKG</a>';
+  h+='<a class="ai" href="https://chatgpt.com/" target="_blank">ChatGPT</a>';
+  h+='<a class="ai" href="https://gemini.google.com/app" target="_blank">Gemini</a>';
+  h+='<a class="ai" href="https://claude.ai/" target="_blank">Claude</a>';
+  h+='<a class="ai" href="https://www.perplexity.ai/search?q='+q+'" target="_blank">Perplexity</a>';
+  h+='</div>';
+  return h;
+}
+function msCard(opts){
+  var h='<div class="msAns"><div class="msAnsIn">';
+  h+='<div class="msAnsHead"><span class="msAnsBadge">'+(opts.badge||'JAWABAN DETAIL')+'</span><span class="msAnsTitle">'+msEsc(opts.title)+'</span></div>';
+  if(opts.img) h+='<img class="msAnsImg" src="'+opts.img+'" alt="'+msEsc(opts.title)+'" loading="lazy" onerror="this.style.display=\'none\'">';
+  if(opts.sum) h+='<div class="msSec sum"><b><i class="fa-solid fa-bolt"></i> Ringkasan</b><p>'+opts.sum+'</p></div>';
+  if(opts.ris) h+='<div class="msSec ris"><b><i class="fa-solid fa-file-contract"></i> Risalah Teknis</b><p>'+opts.ris+'</p></div>';
+  if(opts.sar && opts.sar.length) h+='<div class="msSec sar"><b><i class="fa-solid fa-lightbulb"></i> Saran Teknis</b><ul>'+opts.sar.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ul></div>';
+  if(opts.kes) h+='<div class="msSec kes"><b><i class="fa-solid fa-clipboard-check"></i> Kesimpulan</b><p>'+opts.kes+'</p></div>';
+  if(opts.extra) h+=opts.extra;
+  h+=msSrcChips(opts.q||opts.title, opts.wikiUrl);
+  h+='<div class="msActs"><button onclick="msSpeakRead(this)"><i class="fa-solid fa-volume-high"></i> BACA</button><button onclick="msCopyAnswer(this)"><i class="fa-solid fa-copy"></i> SALIN</button></div>';
+  h+='</div></div>';
+  return h;
+}
+window.msSpeakRead=function(btn){ var c=btn.closest('.msAns'); if(!c) return; msSpeak(c.innerText.replace(/\s+/g,' ').slice(0,900)); };
+window.msCopyAnswer=function(btn){ var c=btn.closest('.msAns'); if(!c) return; try{ navigator.clipboard.writeText(c.innerText); btn.innerHTML='<i class="fa-solid fa-check"></i> TERSALIN'; }catch(e){} };
+
+async function msWikiFetch(q){
+  var langs=['id','en'];
+  for(var i=0;i<langs.length;i++){
+    try{
+      var url='https://'+langs[i]+'.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(q)+
+        '&gsrlimit=1&prop=extracts|pageimages&exintro=1&explaintext=1&piprop=thumbnail&pithumbsize=520&format=json&origin=*';
+      var r=await fetch(url,{cache:'no-store'});
+      var j=await r.json();
+      var pages=j && j.query && j.query.pages;
+      if(!pages) continue;
+      var p=Object.keys(pages).map(function(k){return pages[k];})[0];
+      if(p && p.extract && p.extract.length>60){
+        return {lang:langs[i], title:p.title, extract:p.extract, img:(p.thumbnail&&p.thumbnail.source)||null,
+          url:'https://'+langs[i]+'.wikipedia.org/?curid='+p.pageid};
+      }
+    }catch(e){}
+  }
+  return null;
+}
+function msSentences(t){
+  var s=String(t||'').replace(/\s+/g,' ').match(/[^.!?]+[.!?]+/g)||[String(t||'')];
+  return s.map(function(x){return x.trim();});
+}
+function msShorten(t,max){ t=String(t||''); return t.length>max ? t.slice(0,max).replace(/[,;]\s*\S*$/,'')+'…' : t; }
+
+async function msChatAnswer(userText, query){
+  var mc=document.getElementById('chatMessages');
+  if(!mc) return;
+  var id='msA'+Date.now();
+  mc.innerHTML+='<div id="'+id+'" class="msAns"><div class="msAnsIn"><div class="msAnsHead"><span class="msAnsBadge">MENGANALISIS</span><span class="msAnsTitle">Menyusun jawaban teknis...</span></div><div class="msTyping"><i></i><i></i><i></i></div></div></div>';
+  mc.scrollTop=mc.scrollHeight;
+
+  var q=query||'', out=null;
+
+  // --- salam / identitas / bantuan
+  if(/^(halo|hai|hi|hello|assalam|salam|pagi|siang|malam|selamat)\b/.test(q) || q.indexOf('siapa kamu')>=0 || q.indexOf('tentang kamu')>=0 || q.indexOf('bantuan')>=0 || q.indexOf('help')>=0 || q.indexOf('kemampuan')>=0){
+    out=msCard({badge:'ASISTEN MUSON AI', title:'Salam — Asisten Teknis Muson Indonesia', q:'asisten ai cuaca indonesia',
+      sum:'Saya asisten teknis yang membaca data atmosfer live (Open-Meteo/ECMWF-ICON-GFS), menghitung indeks muson, dan menyusun risalah, saran, serta kesimpulan teknis dalam bahasa yang bisa langsung dipakai.',
+      ris:'Kemampuan utama: (1) membaca cuaca live dan prakiraan 7 hari untuk 30 kota pemantauan plus pencarian kota bebas; (2) menghitung komponen zonal/meridional angin dan mengklasifikasikan fase Monsun Barat, Timur, atau Transisi; (3) menilai risiko operasional 0–100 dari hujan, hembusan angin, CAPE, dan kode cuaca ekstrem; (4) menyusun risalah teknis, saran teknis, dan kesimpulan otomatis; (5) menjawab pertanyaan di luar topik dengan ringkasan dari ensiklopedia dan tautan sumber.',
+      sar:['Tulis pertanyaan spesifik, misalnya "prakiraan cuaca Semarang" atau "risiko banjir bulan ini".','Gunakan panel CUACA LIVE untuk risalah lengkap dan ekspor Word.','Untuk peringatan resmi, selalu cek BMKG.'],
+      kes:'Saya membantu analisis dan penyusunan risalah; keputusan akhir tetap di tangan Anda sebagai pengguna teknis.'});
+  }
+  // --- direktori aplikasi
+  else if(q.indexOf('my aplikasi')>=0 || q.indexOf('daftar aplikasi')>=0 || q.indexOf('aplikasi saya')>=0 || q.indexOf('portofolio')>=0){
+    var list=(typeof apps!=='undefined')?apps:[];
+    var grid='<div class="msSec sum"><b><i class="fa-solid fa-layer-group"></i> Direktori Aplikasi ('+list.length+')</b><div class="msAppsGrid">'+
+      list.map(function(a){return '<a href="'+a.u+'" target="_blank"><i class="fa-solid '+(a.i||'fa-globe')+' text-cyan-400"></i><span style="min-width:0"><span style="display:block;font-size:10px;font-weight:800;color:#e2f4ff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+msEsc(a.n)+'</span><span style="display:block;font-size:8px;color:#5fd0e8;font-family:monospace">'+msEsc(a.c||'')+'</span></span></a>';}).join('')+
+      '</div></div>';
+    out=msCard({badge:'DIREKTORI', title:'My Aplikasi — '+list.length+' Aplikasi Siap Pakai', q:'aplikasi teknik indonesia',
+      sum:'Seluruh aplikasi hasil pengembangan dikumpulkan di satu direktori, dikelompokkan menurut kategori keahlian.', extra:grid,
+      kes:'Pilih aplikasi yang relevan; setiap aplikasi berjalan mandiri di peramban tanpa pemasangan.'});
+  }
+  // --- topik domain muson
+  else if(msPickTopic(q)){
+    var t=msPickTopic(q), p=msPack(t.k);
+    var wiki=await msWikiFetch(t.k==='muson'?'Monsun':(t.k==='hujan'?'Musim hujan':(t.k==='kemarau'?'Musim kemarau':t.title)));
+    out=msCard({badge:'ANALISIS TEKNIS', title:(p.title||t.title), q:t.title, img:wiki?wiki.img:null, wikiUrl:wiki?wiki.url:null,
+      sum:p.sum, ris:p.ris, sar:p.saran, kes:p.kes});
+  }
+  // --- pertanyaan bebas: Wikipedia detail + gambar + sumber
+  else {
+    var w=await msWikiFetch(userText);
+    if(w){
+      var sents=msSentences(w.extract);
+      var summary=sents.slice(0,2).join(' ');
+      var body=msShorten(sents.slice(2).join(' ') || w.extract, 1250);
+      out=msCard({badge:'PENJELASAN DETAIL', title:w.title, q:userText, img:w.img, wikiUrl:w.url,
+        sum:msShorten(summary,340),
+        ris:body,
+        sar:['Gunakan ringkasan di atas sebagai kerangka awal, lalu verifikasi angka dan definisi pada sumber primer (jurnal/standar).',
+             'Cocokkan istilah dan ambang yang dipakai dengan standar atau regulasi Indonesia yang berlaku (SNI, Permen, pedoman BMKG).',
+             'Bila pertanyaan menyangkut keputusan lapangan, uji asumsi pada data lokal sebelum menerapkannya.'],
+        kes:'Topik "'+msEsc(w.title)+'" dijelaskan dari ensiklopedia '+w.lang.toUpperCase()+'; untuk kedalaman teknis, lanjutkan pada jurnal melalui tautan Scholar di bawah.'});
+    } else {
+      out=msCard({badge:'MODE LURING', title:msShorten(userText,60), q:userText,
+        sum:'Pertanyaan ini di luar basis data muson dan pencarian ensiklopedia tidak dapat dijangkau saat ini (jaringan/kuota).',
+        ris:'Sistem menjawab dengan kerangka teknis umum: identifikasi variabel utama, tetapkan asumsi, kumpulkan data pembanding, lalu uji sensitivitas. Untuk pertanyaan spesifik, sambungkan kembali internet agar ringkasan ensiklopedia dan gambar dapat dimuat otomatis.',
+        sar:['Aktifkan koneksi internet lalu ulangi pertanyaan agar jawaban detail + gambar + sumber muncul.','Gunakan tautan di bawah untuk menelusuri langsung.','Bila pertanyaan terkait cuaca/muson, gunakan panel CUACA LIVE yang tetap bekerja dengan cache terakhir.'],
+        kes:'Tanpa sambungan data, jawaban dibatasi pada kerangka metodologis; kualitas jawaban meningkat signifikan saat daring.'});
+    }
+  }
+
+  var el=document.getElementById(id);
+  if(el){ el.outerHTML=out; }
+  mc.scrollTop=mc.scrollHeight;
+  try{
+    var txt=(el? out : '').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').slice(0,260);
+    msSpeak(txt);
+  }catch(e){}
+}
+window.msChatAnswer=msChatAnswer;
+
+/* ---------- BOOT EARTH ZOOM ---------- */
+window.msBootZoom=function(delta){
+  try{
+    if(typeof bootEarthObj==='undefined' || !bootEarthObj || !bootEarthObj.setZoom) return;
+    var z=bootEarthObj.getZoom()*(delta>0?1.14:0.88);
+    bootEarthObj.setZoom(z);
+    var l=document.getElementById('msBootZoomLbl'); if(l) l.textContent=Math.round(bootEarthObj.getZoom()*100)+'%';
+  }catch(e){}
+};
+window.msBootZoomReset=function(){
+  try{ if(bootEarthObj && bootEarthObj.setZoom){ bootEarthObj.setZoom(1); var l=document.getElementById('msBootZoomLbl'); if(l) l.textContent='100%'; } }catch(e){}
+};
+
+/* ---------- KARTU CUACA UNTUK CHATBOT ---------- */
+function msWeatherCard(){
+  var s=msSnap(); if(!s.a || !s.d) return '';
+  var a=s.a, d=s.d, cur=d.current, c=s.city;
+  var sar=[];
+  try{
+    var el=document.getElementById('wxSaran');
+    if(el){ Array.prototype.slice.call(el.querySelectorAll('li')).slice(0,4).forEach(function(li){ sar.push(li.innerText.trim()); }); }
+  }catch(e){}
+  var kes='';
+  try{ kes=(document.getElementById('wxKesimpulan')||{}).innerText||''; }catch(e){}
+  var sum='<b>'+a.cond[0]+'</b> &bull; suhu '+msN(cur.temperature_2m,1,' °C')+' (terasa '+msN(cur.apparent_temperature,1,' °C')+')'+
+    ' &bull; angin dari '+a.dominant+' '+msN(cur.wind_speed_10m*3.6,0,' km/j')+
+    ' &bull; hujan 24 jam '+msN(a.rain24,1,' mm')+' (probabilitas '+msN(a.probMax,0,' %')+')'+
+    ' &bull; status <b style="color:'+a.status.hex+'">'+a.status.t+' ('+a.score+'/100)</b>.';
+  var ris='Kelembapan relatif <b>'+msN(cur.relative_humidity_2m,0,' %')+'</b>, tekanan udara <b>'+msN(cur.pressure_msl,0,' hPa')+
+    '</b>, tutupan awan <b>'+msN(cur.cloud_cover,0,' %')+'</b>, hembusan angin maksimum <b>'+msN(a.gustMax,0,' km/j')+
+    '</b>. Komponen zonal rata-rata 24 jam u = '+(a.uAvg>=0?'+':'')+msN(a.uAvg,2,' m/s')+', meridional v = '+(a.vAvg>=0?'+':'')+msN(a.vAvg,2,' m/s')+
+    ' sehingga fase sirkulasi diklasifikasikan <b style="color:'+a.phaseColor+'">'+a.phaseFull+'</b> dengan indeks muson MI = '+(a.mi>=0?'+':'')+msN(a.mi,2,' m/s')+
+    ' (intensitas '+a.strengthLabel.toLowerCase()+'). Energi konvektif CAPE maksimum <b>'+msN(a.capeMax,0,' J/kg')+
+    '</b>; akumulasi hujan 7 hari <b>'+msN(a.rain7,1,' mm')+'</b>; puncak angin prakiraan <b>'+msN(a.peakWindVal,0,' km/j')+'</b>.';
+  return msCard({badge:'CUACA LIVE', title:'Cuaca & Prakiraan — '+c, q:c+' prakiraan cuaca', sum:sum, ris:ris, sar:sar, kes:kes});
+}
+window.msWeatherCard=msWeatherCard;
 
 /* boot clock + hijri */
 (function(){ var iv=setInterval(function(){ var ov=document.getElementById("monsoonBootOverlay"); if(!ov || ov.style.display==="none"){ clearInterval(iv); return; } var n=new Date(); var c=document.getElementById("msBootClock"); if(c) c.textContent=n.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+" — "+n.toLocaleTimeString("id-ID",{hour12:false}); var h=document.getElementById("msBootHijri"); if(h) h.textContent=msHijri(n); }, 1000); })();
